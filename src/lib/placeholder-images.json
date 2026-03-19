@@ -1,3 +1,28 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Abstract fluid liquid glass background",
+      "imageUrl": "https://picsum.photos/seed/nemo1/1920/1080",
+      "imageHint": "abstract fluid"
+    },
+    {
+      "id": "template-1",
+      "description": "TikTok Vlog Template",
+      "imageUrl": "https://picsum.photos/seed/vlog1/400/600",
+      "imageHint": "vlog tiktok"
+    },
+    {
+      "id": "template-2",
+      "description": "YouTube Cinematic Intro",
+      "imageUrl": "https://picsum.photos/seed/intro1/600/400",
+      "imageHint": "cinematic landscape"
+    },
+    {
+      "id": "template-3",
+      "description": "Instagram Story Minimal",
+      "imageUrl": "https://picsum.photos/seed/insta1/400/600",
+      "imageHint": "minimal portrait"
+    }
+  ]
 }
