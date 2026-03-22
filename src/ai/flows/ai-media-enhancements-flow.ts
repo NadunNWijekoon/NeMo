@@ -128,7 +128,7 @@ const boostAudioVoiceTool = ai.defineTool(
 );
 
 // 2. Define Input Schema for the Flow
-export const AIMediaEnhancementInputSchema = z.object({
+const AIMediaEnhancementInputSchema = z.object({
   mediaDataUri: z
     .string()
     .describe(
@@ -141,7 +141,7 @@ export const AIMediaEnhancementInputSchema = z.object({
 export type AIMediaEnhancementInput = z.infer<typeof AIMediaEnhancementInputSchema>;
 
 // 3. Define Output Schema for the Flow
-export const AIMediaEnhancementOutputSchema = z.object({
+const AIMediaEnhancementOutputSchema = z.object({
   summary: z.string().describe('An AI-generated summary of the enhancement that was performed.'),
   processedMediaDataUri: z
     .string()
@@ -190,9 +190,6 @@ const aiMediaEnhancementFlow = ai.defineFlow(
       };
     }
 
-    // The LLM's response should already contain the structured output according to AIMediaEnhancementOutputSchema.
-    // If a tool was called, its output (including processedMediaDataUri and status) would be integrated into the LLM's response.
-    // We're assuming the prompt guides the LLM to structure the final response correctly.
     return output;
   }
 );

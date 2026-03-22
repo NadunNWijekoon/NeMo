@@ -9,12 +9,41 @@ import {
   Undo, Redo, Download, Share2, 
   Layers, Music, Type, Sticker, 
   Filter, Play, Settings2, Trash2, 
-  ChevronLeft, Layout
+  ChevronLeft, Layout, Sparkles, Loader2
 } from "lucide-react";
 import Link from "next/link";
+import { aiMediaEnhancement } from "@/ai/flows/ai-media-enhancements-flow";
+import { useToast } from "@/hooks/use-toast";
 
 export default function EditorPage() {
   const [activeTab, setActiveTab] = useState('layers');
+  const [isEnhancing, setIsEnhancing] = useState(false);
+  const { toast } = useToast();
+
+  const handleApplyEnhancement = async () => {
+    setIsEnhancing(true);
+    try {
+      const mockAudioUri = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+      const result = await aiMediaEnhancement({
+        mediaDataUri: mockAudioUri,
+        mediaType: 'audio',
+        enhancementRequest: "remove background noise and boost voice in Clip_3",
+      });
+
+      toast({
+        title: "Enhancement Applied",
+        description: result.summary,
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Enhancement Failed",
+        description: "Could not apply AI enhancement.",
+      });
+    } finally {
+      setIsEnhancing(false);
+    }
+  };
 
   return (
     <div className="h-screen bg-background overflow-hidden flex flex-col pt-16">
@@ -161,7 +190,20 @@ export default function EditorPage() {
                <p className="text-xs text-muted-foreground leading-relaxed">
                  The audio in Clip_3 has high background noise. NeMo can remove it with one click.
                </p>
-               <Button size="sm" variant="outline" className="w-full mt-3 rounded-full text-xs font-bold bg-white/10">Apply Noise Reduction</Button>
+               <Button 
+                onClick={handleApplyEnhancement}
+                disabled={isEnhancing}
+                size="sm" 
+                variant="outline" 
+                className="w-full mt-3 rounded-full text-xs font-bold bg-white/10"
+               >
+                 {isEnhancing ? (
+                   <>
+                    <Loader2 className="w-3 h-3 mr-2 animate-spin" />
+                    Processing...
+                   </>
+                 ) : "Apply Noise Reduction"}
+               </Button>
             </div>
           </div>
         </aside>
